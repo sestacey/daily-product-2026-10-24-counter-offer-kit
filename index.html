@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Counter Offer Kit — Negotiate Your Job Offer Without Risking It</title>
+<style>
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;max-width:760px;margin:0 auto;padding:24px;line-height:1.55;color:#1a1a1a}
+h1{font-size:1.9em}h2{margin-top:2em;border-top:2px solid #111;padding-top:.4em}
+.card{border:1px solid #ccc;border-radius:10px;padding:16px;margin:12px 0}
+label{display:block;margin:10px 0 4px;font-weight:600}
+input,select,textarea{width:100%;padding:8px;font-size:1em;box-sizing:border-box}
+button{background:#111;color:#fff;border:0;padding:10px 18px;border-radius:6px;font-size:1em;cursor:pointer}
+button:hover{background:#333}
+.result{background:#f2f7f2;border:1px solid #9c9;padding:14px;border-radius:8px;margin-top:12px}
+.warn{background:#fff8e6;border:1px solid #e6c200;padding:14px;border-radius:8px;margin-top:12px}
+.small{font-size:.9em;color:#555}
+.check{margin:8px 0}
+.crosssell{border:2px solid #111;border-radius:10px;padding:16px;margin-top:2em}
+</style>
+</head>
+<body>
+<h1>Counter Offer Kit</h1>
+<p><strong>Negotiate your job offer without risking it.</strong> Most people who negotiate get a better offer — and most people never ask, because they're afraid of losing the job. This kit turns a scary conversation into a plan: diagnose your position, run the real total-compensation math, generate your counter-offer, and validate it before you send anything.</p>
+<p class="small">Built for job seekers with a written offer in hand. Not legal advice and not a guarantee of a higher offer — a preparation tool. Works for salaried roles; adapt the numbers for hourly roles by annualizing.</p>
+
+<h2>Part 1 — Diagnostic: How strong is your position?</h2>
+<p>Answer honestly. Your score tells you how hard to push — and where the risk actually is.</p>
+<div class="card" id="diag">
+<label><input type="checkbox" class="dq" data-w="2"> I have a written offer (not just a verbal number)</label>
+<label><input type="checkbox" class="dq" data-w="2"> I have another live opportunity, interview pipeline, or a job I can stay in</label>
+<label><input type="checkbox" class="dq" data-w="2"> I know the market range for this role, city, and level (from 2+ sources)</label>
+<label><input type="checkbox" class="dq" data-w="1"> The offer is below the market range, or below what I need</label>
+<label><input type="checkbox" class="dq" data-w="1"> I have a competing offer, or a credible competing timeline</label>
+<label><input type="checkbox" class="dq" data-w="1"> The role has been open a long time, or they told me I'm their top choice</label>
+<label><input type="checkbox" class="dq" data-w="-2"> I must accept within 48 hours or lose the offer, with no leverage</label>
+<label><input type="checkbox" class="dq" data-w="-2"> I already verbally accepted a specific number</label>
+<button onclick="diagnose()">Score my position</button>
+<div id="diagOut"></div>
+</div>
+
+<h2>Part 2 — Generator A: Total compensation calculator</h2>
+<p>Base salary is only one lever. Compare the offer against your target on <em>total</em> value — then pick the cheapest lever for them to move.</p>
+<div class="card">
+<label>Offered base salary ($/year) <input id="oBase" type="number" value="85000"></label>
+<label>Offered annual bonus ($, or 0) <input id="oBonus" type="number" value="5000"></label>
+<label>Offered signing bonus ($, one-time) <input id="oSign" type="number" value="0"></label>
+<label>Offered PTO days/year <input id="oPto" type="number" value="15"></label>
+<label>Target base salary ($/year) <input id="tBase" type="number" value="95000"></label>
+<label>Target annual bonus ($) <input id="tBonus" type="number" value="7500"></label>
+<label>Target PTO days/year <input id="tPto" type="number" value="20"></label>
+<button onclick="calcComp()">Compare offers</button>
+<div id="compOut"></div>
+</div>
+
+<h2>Part 2 — Generator B: Your counter-offer, written for you</h2>
+<p>Fill in the blanks, then copy the email. Rule of thumb baked in: counter 5–15% above the offer, never as an ultimatum, always as a question.</p>
+<div class="card">
+<label>Your name <input id="gName" type="text" placeholder="Jordan Lee"></label>
+<label>Recruiter / hiring manager name <input id="gRec" type="text" placeholder="Alex"></label>
+<label>Company <input id="gCo" type="text" placeholder="Acme Corp"></label>
+<label>Role <input id="gRole" type="text" placeholder="Product Designer"></label>
+<label>Offered base ($) <input id="gOffer" type="number" value="85000"></label>
+<label>Your counter base ($) — aim 5–15% above the offer <input id="gCounter" type="number" value="95000"></label>
+<label>Your strongest reason (one line) <input id="gReason" type="text" placeholder="comparable roles in this city pay $95–105k, and I bring 5 years shipping this exact product type"></label>
+<label>Fallback ask if base won't move
+<select id="gFallback">
+<option>Signing bonus</option>
+<option>Extra PTO days</option>
+<option>Earlier performance review (6 months, with raise tied to it)</option>
+<option>Remote-work flexibility</option>
+<option>Professional development budget</option>
+</select></label>
+<button onclick="genLetter()">Generate my counter-offer email</button>
+<div id="letterOut"></div>
+</div>
+
+<h2>Part 3 — Validator: Ready-to-send checklist</h2>
+<p>Do not send until every box is honestly checked. If any box fails, fix it first — that's the whole point.</p>
+<div class="card" id="val">
+<label class="check"><input type="checkbox" class="vq"> I have the offer in writing and I'm negotiating from it, not from a rumor</label>
+<label class="check"><input type="checkbox" class="vq"> My counter is within 15% of the offer (or I can justify why it's not)</label>
+<label class="check"><input type="checkbox" class="vq"> I lead with enthusiasm for the role — no threats, no ultimatums</label>
+<label class="check"><input type="checkbox" class="vq"> I have one fallback ask ready if base salary is capped</label>
+<label class="check"><input type="checkbox" class="vq"> I know my walk-away number and I'm prepared to use it calmly</label>
+<label class="check"><input type="checkbox" class="vq"> I read the email out loud once — it sounds confident, not apologetic or aggressive</label>
+<label class="check"><input type="checkbox" class="vq"> I sent it by email (not a live phone ambush), so there's a paper trail</label>
+<button onclick="validate()">Validate my counter-offer</button>
+<div id="valOut"></div>
+</div>
+
+<h2>The 5-minute script (if they call instead)</h2>
+<div class="card">
+<p>"Thank you again for the offer — I'm really excited about the team and the role. I've been reviewing the full package, and based on [market data / competing timeline / scope of the role], I was expecting something closer to $[counter]. Is there flexibility to move in that direction? If base is fixed, I'd love to talk about [fallback ask]."</p>
+<p class="small">Then stop talking. Silence is not rudeness — it's letting them answer. Never apologize for asking, and never say "I'll walk" unless you mean it.</p>
+</div>
+
+<div class="crosssell">
+<h2>Keep climbing the career ladder</h2>
+<p><strong>Pair this kit with the Interview Confidence Kit</strong> — the prequel in this career series. It got you the offer; this kit gets you paid for it. If you interviewed with it, run this kit the day the written offer lands, before you reply.</p>
+<p class="small">Next in the series (coming soon): the raise-request kit for the job you already have.</p>
+</div>
+
+<p class="small">Sources that shaped this kit: SalaryPrep ($39 personalized playbook), The Salary Negotiator ($197 course), and thousands of real job seekers' stories about the offer they wish they'd negotiated. This kit is a preparation tool, not a promise — no one can guarantee an employer will say yes.</p>
+
+<script>
+function diagnose(){
+  let s=0; document.querySelectorAll('.dq:checked').forEach(c=>s+=+c.dataset.w);
+  let msg = s>=6 ? "Strong position — you can counter confidently at the top of your range and hold a firm fallback." :
+    s>=3 ? "Solid position — counter in the 5–10% band, lead with enthusiasm, and lean on your fallback ask." :
+    s>=0 ? "Cautious position — counter modestly (5%), prioritize non-salary asks, and buy time to build leverage." :
+    "Fragile position — do NOT push hard. Ask for time, confirm the written offer, and negotiate one small item (start date, review timing) while you build alternatives.";
+  document.getElementById('diagOut').innerHTML = '<div class="result"><strong>Position score: '+s+'</strong><br>'+msg+'</div>';
+}
+function calcComp(){
+  const v=id=>+document.getElementById(id).value||0;
+  const dayRate=o=>o/260;
+  const oTot=v('oBase')+v('oBonus')+v('oSign')+v('oPto')*dayRate(v('oBase'));
+  const tTot=v('tBase')+v('tBonus')+v('tPto')*dayRate(v('tBase'));
+  const gap=tTot-oTot;
+  document.getElementById('compOut').innerHTML='<div class="result"><strong>Offer total value: $'+Math.round(oTot).toLocaleString()+'</strong> (base + bonus + signing + PTO valued at daily rate)<br><strong>Target total value: $'+Math.round(tTot).toLocaleString()+'</strong><br><strong>Gap: $'+Math.round(gap).toLocaleString()+'</strong><br>'+(gap>0?'Close the gap with the cheapest lever for them: often a signing bonus, extra PTO, or an early review — not always base salary.':'Your target is already met or beaten on total value — negotiate the mix (e.g., more PTO or an earlier review) rather than the headline number.')+'</div>';
+}
+function genLetter(){
+  const v=id=>document.getElementById(id).value;
+  const pct=Math.round((v('gCounter')-v('gOffer'))/v('gOffer')*100);
+  const warn = (pct>15||pct<0) ? '<div class="warn"><strong>Heads-up:</strong> your counter is '+pct+'% above the offer. Counters above 15% are where offers get strained — either bring it into the 5–15% band or be ready to justify it with market data.</div>' : '';
+  const letter = 'Subject: Thank you — '+v('gRole')+' offer\n\nHi '+v('gRec')+',\n\nThank you so much for the offer to join '+v('gCo')+' as '+v('gRole')+'. I\'m genuinely excited about the team and the work.\n\nI\'ve had a chance to review the full package. Based on '+v('gReason')+', I was expecting something closer to $'+(+v('gCounter')).toLocaleString()+' in base salary. Is there flexibility to move in that direction?\n\nIf base is fixed, I\'d love to discuss '+v('gFallback').toLowerCase()+' as an alternative.\n\nI\'m excited to get started and happy to discuss — thank you again for the opportunity.\n\nBest,\n'+v('gName');
+  document.getElementById('letterOut').innerHTML=warn+'<div class="result"><textarea rows="16" readonly>'+letter+'</textarea><p class="small">Copy, personalize the reason line with YOUR data, read it out loud once, then send.</p></div>';
+}
+function validate(){
+  const total=document.querySelectorAll('.vq').length;
+  const done=document.querySelectorAll('.vq:checked').length;
+  document.getElementById('valOut').innerHTML = done===total
+    ? '<div class="result"><strong>✓ Ready to send.</strong> All '+total+' checks pass. Send it by email, then wait — don\'t chase within 24 hours.</div>'
+    : '<div class="warn"><strong>Not yet — '+done+' of '+total+' checks pass.</strong> Fix the unchecked items before sending. The most common miss is sending without a fallback ask.</div>';
+}
+</script>
+</body>
+</html>
